@@ -6,9 +6,6 @@ const path = require("node:path");
 const { readPages } = require("./pdfLayout");
 const { linesFromItems, textFromLines } = require("../domain/lines");
 
-// DOCX and TXT carry no page geometry we can inspect: mammoth flattens tables and columns before we ever see them, so those checks are reported as unchecked rather than passed.
-const GEOMETRY_FORMATS = new Set([".pdf"]);
-
 function normalize(text) {
     return text
         .replace(/\r\n?/g, "\n")
@@ -22,6 +19,7 @@ async function readDocument(filePath) {
     const extension = path.extname(filePath).toLowerCase();
 
     if (extension === ".txt") {
+        // DOCX and TXT carry no page geometry to inspect: mammoth flattens tables and columns before we ever see them, so the geometry checks report as unchecked rather than as passed.
         return {
             format: "txt",
             hasGeometry: false,
@@ -52,7 +50,7 @@ async function readDocument(filePath) {
 
         return {
             format: "pdf",
-            hasGeometry: GEOMETRY_FORMATS.has(extension),
+            hasGeometry: true,
             pages,
             text: normalize(text)
         };

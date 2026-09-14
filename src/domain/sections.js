@@ -211,4 +211,4 @@ function detectSections(lines, body = null) {
     return { headings, sections };
 }
 
-module.exports = { detectSections, classifyLine, SECTION_ALIASES };
+module.exports = { detectSections, classifyLine };
