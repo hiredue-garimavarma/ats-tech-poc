@@ -1,10 +1,10 @@
 {
   "name": "ats-poc",
   "version": "1.0.0",
-  "description": "",
+  "description": "Deterministic ATS readiness scoring for a resume, with no job description and no LLM.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node --test \"test/*.test.js\""
   },
   "keywords": [],
   "author": "",
@@ -12,6 +12,6 @@
   "type": "commonjs",
   "dependencies": {
     "mammoth": "^1.12.2",
-    "pdf-parse": "^2.4.5"
+    "pdfjs-dist": "^6.3.289"
   }
 }

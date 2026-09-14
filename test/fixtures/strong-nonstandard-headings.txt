@@ -1,0 +1,23 @@
+Jane Smith | jane.smith@corp.com | (415) 555-0199 | linkedin.com/in/janesmith
+
+PROFESSIONAL BACKGROUND
+Staff engineer with 11 years building payments infrastructure.
+
+WORK HISTORY
+Senior Staff Engineer, Stripe (Mar 2021 - Present)
+- Cut p99 checkout latency from 800ms to 210ms, saving $4.2M in abandoned carts
+- Led a team of 9 engineers across three timezones through a platform rewrite
+- Migrated 400 services off a monolith with zero downtime over eighteen months
+
+Engineer, Square (2016 - 2021)
+- Built the ledger service handling 12B transactions annually for 40k merchants
+- Reduced nightly reconciliation from 6 hours to 20 minutes by resharding
+
+ACADEMIC QUALIFICATIONS
+MS Computer Science, Stanford University, 2016
+
+TECHNICAL COMPETENCIES
+Go, Rust, Kubernetes, Postgres, Kafka, Terraform, gRPC
+
+SELECTED PROJECTS
+Open-source ledger toolkit used by 300 teams

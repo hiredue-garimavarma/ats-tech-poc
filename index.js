@@ -1,93 +1,47 @@
-const fs = require("fs");
+const fs = require("node:fs");
 
-const {
-    extractText,
-    normalizeText
-} = require("./parser");
+const { readDocument } = require("./src/adapters/document");
+const { analyseResume } = require("./src/domain/resume");
+const { scoreResume } = require("./src/domain/score");
+const { printReport } = require("./src/report");
 
-const {
-    analyzeResume
-} = require("./analyzer");
-
-const {
-    calculateScore,
-    generateSuggestions
-} = require("./scorer");
-
-const {
-    printReport
-} = require("./report");
-
-async function main() {
-    const filePath = process.argv[2];
-
-    if (!filePath) {
-        console.log(`
+const USAGE = `
 Usage:
-  node index.js <resume-file>
+  node index.js <resume-file> [--json]
 
 Examples:
   node index.js resume.pdf
-  node index.js resume.docx
-  node index.js resume.txt
-`);
+  node index.js resume.docx --json
+`;
 
+async function main() {
+    const args = process.argv.slice(2);
+    const filePath = args.find(arg => !arg.startsWith("--"));
+    const asJson = args.includes("--json");
+
+    if (!filePath) {
+        console.log(USAGE);
         process.exit(1);
     }
 
     if (!fs.existsSync(filePath)) {
-        console.error(
-            `\nFile not found: ${filePath}\n`
-        );
-
+        console.error(`\nFile not found: ${filePath}\n`);
         process.exit(1);
     }
 
     try {
-        console.log("\nReading resume...");
+        const document = await readDocument(filePath);
+        const resume = analyseResume(document);
+        const score = scoreResume(resume);
 
-        // 1. Extract text from the document
-        const rawText = await extractText(filePath);
-
-        if (!rawText || !rawText.trim()) {
-            throw new Error(
-                "No readable text could be extracted."
-            );
+        if (asJson) {
+            console.log(JSON.stringify({ file: filePath, format: resume.format, score, parseRisk: resume.parseRisk }, null, 2));
+            return;
         }
 
-        console.log(
-            "✓ Resume parsed successfully."
-        );
-
-        // 2. Normalize extracted text
-        const text = normalizeText(rawText);
-
-        // 3. Analyze the resume
-        const analysis = analyzeResume(text);
-
-        // 4. Calculate ATS score
-        const score = calculateScore({
-            text,
-            ...analysis
-        });
-
-        // 5. Generate recommendations
-        const suggestions =
-            generateSuggestions(analysis);
-
-        // 6. Display the final report
-        printReport({
-            filePath,
-            score,
-            ...analysis,
-            suggestions
-        });
-
+        printReport({ filePath, resume, score });
     } catch (error) {
-        console.error(
-            `\nError: ${error.message}\n`
-        );
-
+        console.error(`\nError: ${error.message}\n`);
         process.exit(1);
     }
 }
