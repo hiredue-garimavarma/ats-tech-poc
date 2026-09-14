@@ -1,0 +1,27 @@
+John Doe
+john@example.com
++1 555 123 4567
+linkedin.com/in/johndoe
+
+Summary
+lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor
+
+Experience
+Acme Corp 2020 - Present
+- did stuff banana banana banana and some other things here
+- responsible for more stuff and various items of work each day
+- widgets and things that were handled by the team over time
+Beta Inc 2018 - 2020
+- things and more things happened here as part of the role
+
+Education
+B.Tech, Some University 2014 - 2018
+
+Skills
+alpha, beta, gamma, delta, epsilon, zeta, eta, theta
+
+Projects
+Thing one
+
+Certifications
+Some cert
